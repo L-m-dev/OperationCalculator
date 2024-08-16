@@ -5,15 +5,17 @@ using CalculatorLibrary;
 
 
 Calculator calculator = new();
+int calculationsCompleted = 0;
+List<string> calculationsHistory = new List<string>();
+
 while (true)
 {
+    
     decimal? num1;
     decimal? num2;
 
     decimal cleanNum1 = 0;
     decimal cleanNum2 = 0;
-
-    
 
     Console.WriteLine("Type first number:");
 
@@ -29,17 +31,17 @@ while (true)
         Console.WriteLine("Invalid input. Enter valid number");
     }
 
-    Console.WriteLine("Operation?\n1- Sum\n2-Minus\n3-Multiply\n4-Divide");
+    Console.WriteLine("Operation?\n1-Sum\n2-Minus\n3-Multiply\n4-Divide");
 
     string? choice = Console.ReadLine().Trim().ToLower();
     Operation operation;
 
     if (choice == null || !Regex.IsMatch(choice, "[1|2|3|4]"))
     {
-        Console.WriteLine("Invalid choice.");
+        Console.WriteLine("Invalid choice of operation.");
     }
     else
-    {
+        {
         try
         {
             switch (choice)
@@ -61,6 +63,8 @@ while (true)
             }
 
             decimal? result = calculator.DoOperation(cleanNum1, cleanNum2, operation);
+            calculationsHistory.Add($" {cleanNum1} {OperationEnumHelper.OperationEnumFriendlyString(operation)} {cleanNum2} = {result}");
+            calculationsCompleted++;
 
             Console.WriteLine(result);
 
@@ -70,10 +74,11 @@ while (true)
             Console.WriteLine(e.Message);
         }
 
-        calculator.Finish();
         Console.WriteLine("Want to quit? type in 'quit'. Want to continue, press Enter");
         if (Console.ReadLine().Trim().ToLower().Equals("quit"))
-        {
+        {        
+            
+            calculator.Finish();
             break;
         }
     }
