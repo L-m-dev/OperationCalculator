@@ -3,6 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using CalculatorLibrary;
 
+
+Calculator calculator = new();
 while (true)
 {
     decimal? num1;
@@ -11,7 +13,7 @@ while (true)
     decimal cleanNum1 = 0;
     decimal cleanNum2 = 0;
 
-    Calculator calculator = new();
+    
 
     Console.WriteLine("Type first number:");
 
