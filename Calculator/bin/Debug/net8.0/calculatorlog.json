@@ -1,2 +1,10 @@
 {
   "Operations": [
+    {
+      "Operand1": 15.0,
+      "Operand2": 62.0,
+      "Operation": "Subtract",
+      "Result": -47.0
+    }
+  ]
+}
