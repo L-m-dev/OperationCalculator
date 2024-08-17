@@ -1,2 +1,21 @@
 {
   "Operations": [
+    {
+      "Operand1": 10.0,
+      "Operation": "Multiply by 10",
+      "Result": 100.0
+    },
+    {
+      "Operand1": 122.0,
+      "Operation": "SquareRoot",
+      "Result": 11.0453610171873
+    },
+    {
+      "Operand1": 16.0,
+      "Operand2": 55.0,
+      "Operation": {
+        "Operand1": 444.0,
+        "Operand2": 3.0,
+        "Operation": "Power",
+        "Result": 87528384.0
+      }

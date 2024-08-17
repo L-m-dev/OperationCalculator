@@ -8,7 +8,8 @@ Calculator calculator = new();
 int calculationsCompleted = 0;
 List<string> calculationsHistory = new List<string>();
 
-while (true) {
+while (true)
+{
 
     Console.WriteLine("---Calculator---");
     Console.WriteLine("Choose option:");
@@ -19,7 +20,7 @@ while (true) {
     Console.WriteLine("0-EXIT");
 
     int menuChoice = 0;
-    while(!Int32.TryParse(Console.ReadLine(), out menuChoice))
+    while (!Int32.TryParse(Console.ReadLine(), out menuChoice))
     {
         Console.WriteLine("Invalid choice");
         Console.WriteLine("1-Compute new problems");
@@ -35,44 +36,54 @@ while (true) {
         while (true)
         {
 
-            decimal? num1;
-            decimal? num2;
-
-            decimal cleanNum1 = 0;
-            decimal cleanNum2 = 0;
-
-            Console.WriteLine("Type first number:");
-
-            while (!Decimal.TryParse(Console.ReadLine(), out cleanNum1))
-            {
-                Console.WriteLine("Invalid input. Enter valid number");
-            }
-
-            Console.WriteLine("Type second number:");
-
-            while (!Decimal.TryParse(Console.ReadLine(), out cleanNum2))
-            {
-                Console.WriteLine("Invalid input. Enter valid number");
-            }
-
-            Console.WriteLine("Operation?\n1-Sum\n2-Minus\n3-Multiply\n4-Divide\n0-Go back");
+            Console.WriteLine("Operation?\n1-Sum\n2-Minus\n3-Multiply\n4-Divide\n5-Square Root\n6-Elevate to POWER\n7-Multiply by 10\n8-Trig\n0-Go back");
 
             string? choice = Console.ReadLine().Trim().ToLower();
 
             Operation operation = Operation.Undefined;
 
-            if (choice == null || !Regex.IsMatch(choice, "[1|2|3|4|0]"))
+            if (choice == null || !Regex.IsMatch(choice, "[1|2|3|4|5|6|7|8|0]"))
             {
                 Console.WriteLine("Invalid choice of operation.");
             }
+            else if (choice == "0")
+            {
+                break;
+            }
+
             else
             {
+                Console.WriteLine();
+                decimal? num1;
+                decimal? num2;
+
+                decimal cleanNum1 = 0;
+                decimal cleanNum2 = 0;
+
+                Console.WriteLine("Type first number:");
+
+                while (!Decimal.TryParse(Console.ReadLine(), out cleanNum1))
+                {
+                    Console.WriteLine("Invalid input. Enter valid number");
+                }
+
+
+                if (choice != "5" && choice != "7")
+                {
+                    Console.WriteLine("Type second number:");
+
+                    while (!Decimal.TryParse(Console.ReadLine(), out cleanNum2))
+                    {
+                        Console.WriteLine("Invalid input. Enter valid number");
+                    }
+                }
+
+
                 try
                 {
                     switch (choice)
                     {
-                        case "0":
-                            break;
+
                         case "1":
                             operation = Operation.Add;
                             break;
@@ -85,22 +96,42 @@ while (true) {
                         case "4":
                             operation = Operation.Divide;
                             break;
-                        
+                        case "5":
+                            operation = Operation.SquareRoot;
+                            break;
+                        case "6":
+                            operation = Operation.Power;
+                            break;
+                        case "7":
+                            operation = Operation.MultiplyBy10;
+                            break;
                         default:
                             throw new InvalidOperationException("Invalid choice of operation.");
                     }
 
-                    if(operation == Operation.Undefined)
+                    if (operation == Operation.Undefined)
                     {
                         break;
                     }
 
-                        decimal? result = calculator.DoOperation(cleanNum1, cleanNum2, operation);
-                        calculationsHistory.Add($" {cleanNum1} {OperationEnumHelper.OperationEnumFriendlyString(operation)} {cleanNum2} = {result}");
+                    decimal? result = 0;
+                    if (cleanNum2 == 0)
+                    {
+                        result = calculator.DoOperation(cleanNum1, operation);
+
+                        calculationsHistory.Add($" {cleanNum1} {OperationEnumHelper.OperationEnumFriendlyString(operation)} = {result}");
                         calculationsCompleted++;
 
-                        Console.WriteLine(result);
-                    
+                    }
+                    else
+                    {
+                        result = calculator.DoOperation(cleanNum1, operation, cleanNum2);
+
+                        calculationsHistory.Add($" {cleanNum1} {OperationEnumHelper.OperationEnumFriendlyString(operation)} {cleanNum2} = {result}");
+                        calculationsCompleted++;
+                    }
+                    Console.WriteLine(result);
+
                 }
                 catch (Exception e)
                 {
@@ -118,59 +149,88 @@ while (true) {
         }
     }
 
-    if(menuChoice == 2)
+    if (menuChoice == 2)
     {
-        int index = 0;
-        foreach (var item in calculationsHistory)
+        if (!(calculationsHistory.Count > 0))
         {
-            Console.WriteLine($"{index} - {item}");
-            index++;
+            Console.WriteLine("No History found.");
         }
-        Console.WriteLine("Press key to continue");
-        Console.ReadKey();
-    }
-
-    if(menuChoice == 3)
-    {
-        Console.WriteLine("Type number of record you wish to delete. Type 'exit' to move back.");
-        int index = 0;
-        bool exit = false;
-
-        foreach (var item in calculationsHistory)
+        else
         {
-            Console.WriteLine($"{index} - {item}");
-            index++;
+            int index = 0;
+            foreach (var item in calculationsHistory)
+            {
+                Console.WriteLine($"{index} - {item}");
+                index++;
+            }
+            Console.WriteLine("Press key to continue");
+            Console.ReadKey();
         }
-        int deleteChoice = 0;
-        string input = "0";
-        bool success = false;
-        do
-        {
-            input = Console.ReadLine();
-            if (input == "exit")
-            {
-                exit = true;
-                break;
-            }
-           success = Int32.TryParse(input, out deleteChoice);
-            if (!success)
-            {
-                Console.WriteLine("Enter valid choice.");
-            }
-        } while (!success);
-
-        calculationsHistory.RemoveAt(deleteChoice);
-
     }
-    if(menuChoice == 4)
+
+    if (menuChoice == 3)
     {
-        calculationsHistory.Clear();
-        Console.WriteLine("History cleared.");
+        if (EmptyHistoryList())
+        {
+            Console.WriteLine("No History found.");
+        }
+        else
+        {
+            Console.WriteLine("Type number of record you wish to delete. Type 'exit' to move back.");
+            int index = 0;
+            bool exit = false;
 
+            foreach (var item in calculationsHistory)
+            {
+                Console.WriteLine($"{index} - {item}");
+                index++;
+            }
+            int deleteChoice = 0;
+            string input = "0";
+            bool success = false;
+            do
+            {
+                input = Console.ReadLine();
+                if (input == "exit")
+                {
+                    exit = true;
+                    break;
+                }
+                success = Int32.TryParse(input, out deleteChoice);
+                if (!success)
+                {
+                    Console.WriteLine("Enter valid choice.");
+                }
+            } while (!success);
+
+            calculationsHistory.RemoveAt(deleteChoice);
+        }
     }
-    if(menuChoice == 0)
+    if (menuChoice == 4)
+    {
+        if (EmptyHistoryList())
+        {
+            Console.WriteLine("No history found.");
+        }
+        else
+        {
+
+            calculationsHistory.Clear();
+            Console.WriteLine("History cleared.");
+        }
+    }
+    if (menuChoice == 0)
     {
         break;
     }
+    Console.WriteLine();
 }
 
+ bool EmptyHistoryList()
+{
+    if (calculationsHistory.Count > 0)
+    {
+        return false;
+    }
+    return true;
+}
