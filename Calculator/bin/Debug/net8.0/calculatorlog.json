@@ -1,14 +1,2 @@
 {
   "Operations": [
-    {
-      "Operand1": 4.0,
-      "Operand2": 6.0,
-      "Operation": "Divide",
-      "Result": 0.6666666666666666666666666667
-    },
-    {
-      "Operand1": 55.0,
-      "Operand2": 88.0,
-      "Operation": "Multiply",
-      "Result": 4840.0
-    }
