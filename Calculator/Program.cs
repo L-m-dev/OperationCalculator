@@ -1,6 +1,7 @@
 ﻿
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
+using VoiceRecognition;
 using CalculatorLibrary;
 
 
@@ -60,24 +61,38 @@ while (true)
                 decimal cleanNum1 = 0;
                 decimal cleanNum2 = 0;
 
-                Console.WriteLine("Type first number:");
+                Console.WriteLine("This application utilizes Voice Recognition.");
+                Console.WriteLine("Say aloud the first number:");
 
-                while (!Decimal.TryParse(Console.ReadLine(), out cleanNum1))
+                while (!Decimal.TryParse(await VoiceRecognition.VoiceRecognition.VoiceRecognitionOnce(), out cleanNum1))
                 {
-                    Console.WriteLine("Invalid input. Enter valid number");
+                    if(cleanNum1 == 0)
+                    {
+                        Console.WriteLine("API failure.");
+                        break;
+                    }
+                    Console.WriteLine("Invalid input. Please try again.");
+                    Console.WriteLine("Say aloud the first number:");
                 }
-
+                Console.WriteLine($"First argument: {cleanNum1}");
 
                 if (choice != "5" && choice != "7")
                 {
-                    Console.WriteLine("Type second number:");
+                    Console.WriteLine("Say aloud the second number:");
 
-                    while (!Decimal.TryParse(Console.ReadLine(), out cleanNum2))
+                    while (!Decimal.TryParse(await VoiceRecognition.VoiceRecognition.VoiceRecognitionOnce(), out cleanNum2))
                     {
-                        Console.WriteLine("Invalid input. Enter valid number");
+                        if (cleanNum1 == 0)
+                        {
+                            Console.WriteLine("API failure.");
+                            break;
+                        }
+                        Console.WriteLine("Invalid input. Please try again.");
+                        Console.WriteLine("Say aloud the second number:");
                     }
-                }
+                    Console.WriteLine($"Second argument: {cleanNum2}");
 
+                }
 
                 try
                 {
@@ -130,7 +145,7 @@ while (true)
                         calculationsHistory.Add($" {cleanNum1} {OperationEnumHelper.OperationEnumFriendlyString(operation)} {cleanNum2} = {result}");
                         calculationsCompleted++;
                     }
-                    Console.WriteLine(result);
+                    Console.WriteLine($"The result is {result}");
 
                 }
                 catch (Exception e)

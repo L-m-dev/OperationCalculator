@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator", "Calculator\Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorLibrary", "CalculatorLibrary\CalculatorLibrary.csproj", "{35668CB4-6E51-410F-B9EC-CBAFD3A0C66D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceRecognition", "VoiceRecognition\VoiceRecognition.csproj", "{0EBE189E-B738-478A-A08C-4B8B70FC2CF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{35668CB4-6E51-410F-B9EC-CBAFD3A0C66D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35668CB4-6E51-410F-B9EC-CBAFD3A0C66D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35668CB4-6E51-410F-B9EC-CBAFD3A0C66D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EBE189E-B738-478A-A08C-4B8B70FC2CF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EBE189E-B738-478A-A08C-4B8B70FC2CF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EBE189E-B738-478A-A08C-4B8B70FC2CF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EBE189E-B738-478A-A08C-4B8B70FC2CF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

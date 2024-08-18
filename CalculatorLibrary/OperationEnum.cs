@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 namespace CalculatorLibrary
 {
     public enum Operation
-    {
+    {   Undefined,
         Add,
         Subtract,
         Multiply,
-        Divide
+        Divide,
+        SquareRoot,
+        Power,
+        MultiplyBy10
     }
 
     public static class OperationEnumHelper
@@ -28,7 +31,12 @@ namespace CalculatorLibrary
                     return "*";
                 case Operation.Divide:
                     return "/";
-
+                case Operation.SquareRoot:
+                    return "squared";
+                case Operation.Power:
+                    return "^";
+                case Operation.MultiplyBy10:
+                    return "multiplied by 10";
             }
             throw new Exception("Invalid operation.");
         }
